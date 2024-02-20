@@ -19,7 +19,8 @@ export function bookEndList(numbers: number[]): number[] {
  * number has been tripled (multiplied by 3).
  */
 export function tripleNumbers(numbers: number[]): number[] {
-    return numbers;
+    const tripled = numbers.map((num: number): number => num * 3);
+    return tripled;
 }
 
 /**
@@ -27,7 +28,8 @@ export function tripleNumbers(numbers: number[]): number[] {
  * the number cannot be parsed as an integer, convert it to 0 instead.
  */
 export function stringsToIntegers(numbers: string[]): number[] {
-    return [];
+    const converted = numbers.map((str: string): number => parseInt(str) || 0);
+    return converted;
 }
 
 /**
@@ -38,7 +40,10 @@ export function stringsToIntegers(numbers: string[]): number[] {
  */
 // Remember, you can write functions as lambdas too! They work exactly the same.
 export const removeDollars = (amounts: string[]): number[] => {
-    return [];
+    const converted = amounts.map(
+        (amount: string): number => parseInt(amount.replace("$", "")) || 0
+    );
+    return converted;
 };
 
 /**
@@ -47,7 +52,13 @@ export const removeDollars = (amounts: string[]): number[] => {
  * in question marks ("?").
  */
 export const shoutIfExclaiming = (messages: string[]): string[] => {
-    return [];
+    const shoutMessages = messages.map((message: string): string =>
+        message.endsWith("!") ? message.toUpperCase() : message
+    );
+    const newMessages = shoutMessages.filter(
+        (message: string): boolean => !message.endsWith("?")
+    );
+    return newMessages;
 };
 
 /**
@@ -55,7 +66,8 @@ export const shoutIfExclaiming = (messages: string[]): string[] => {
  * 4 letters long.
  */
 export function countShortWords(words: string[]): number {
-    return 0;
+    const shortWords = words.filter((word: string): boolean => word.length < 4);
+    return shortWords.length;
 }
 
 /**
@@ -64,7 +76,19 @@ export function countShortWords(words: string[]): number {
  * then return true.
  */
 export function allRGB(colors: string[]): boolean {
-    return false;
+    if (colors.length === 0) {
+        return true;
+    } else {
+        const filteredColors = colors.filter(
+            (color: string): boolean =>
+                color === "red" || color === "blue" || color === "green"
+        );
+        if (filteredColors.length === colors.length) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 
 /**
@@ -75,7 +99,15 @@ export function allRGB(colors: string[]): boolean {
  * And the array [] would become "0=0".
  */
 export function makeMath(addends: number[]): string {
-    return "";
+    if (addends.length === 0) {
+        return "0=0";
+    } else {
+        const sum = addends.reduce(
+            (total: number, num: number) => total + num,
+            0
+        );
+        return sum + "=" + addends.join("+");
+    }
 }
 
 /**
