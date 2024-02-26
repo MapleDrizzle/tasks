@@ -47,8 +47,6 @@ export function isCorrect(question: Question, answer: string): boolean {
  * be exactly one of the options.
  */
 export function isValid(question: Question, answer: string): boolean {
-    //const newAnswer = answer.trim().toLowerCase();
-    // finds if valid for short_answer_question
     if (question.type === "short_answer_question") {
         return true;
     } else {
@@ -71,7 +69,7 @@ export function isValid(question: Question, answer: string): boolean {
  * name "My First Question" would become "9: My First Q".
  */
 export function toShortForm(question: Question): string {
-    return "";
+    return question.id.toString() + ": " + question.name.slice(0, 10);
 }
 
 /**
@@ -92,7 +90,15 @@ export function toShortForm(question: Question): string {
  * Check the unit tests for more examples of what this looks like!
  */
 export function toMarkdown(question: Question): string {
-    return "";
+    let lastLines: string[];
+    if (question.type === "multiple_choice_question") {
+        lastLines = question.options.map(
+            (option: string): string => "\n- " + option
+        );
+    } else {
+        lastLines = [];
+    }
+    return "# " + question.name + "\n" + question.body + [...lastLines];
 }
 
 /**
@@ -100,7 +106,8 @@ export function toMarkdown(question: Question): string {
  * `newName`.
  */
 export function renameQuestion(question: Question, newName: string): Question {
-    return question;
+    const renamedQuestion = { ...question, name: newName };
+    return renamedQuestion;
 }
 
 /**
@@ -109,7 +116,9 @@ export function renameQuestion(question: Question, newName: string): Question {
  * published; if it was published, now it should be not published.
  */
 export function publishQuestion(question: Question): Question {
-    return question;
+    const inverted = !question.published;
+    const newQuestion = { ...question, published: inverted };
+    return newQuestion;
 }
 
 /**
@@ -119,7 +128,14 @@ export function publishQuestion(question: Question): Question {
  * The `published` field should be reset to false.
  */
 export function duplicateQuestion(id: number, oldQuestion: Question): Question {
-    return oldQuestion;
+    const oldName = oldQuestion.name;
+    const newQuestion = {
+        ...oldQuestion,
+        id,
+        name: "Copy of " + oldName,
+        published: false
+    };
+    return newQuestion;
 }
 
 /**
@@ -130,7 +146,11 @@ export function duplicateQuestion(id: number, oldQuestion: Question): Question {
  * Check out the subsection about "Nested Fields" for more information.
  */
 export function addOption(question: Question, newOption: string): Question {
-    return question;
+    const newQuestion = {
+        ...question,
+        options: [...question.options, newOption]
+    };
+    return newQuestion;
 }
 
 /**
@@ -147,5 +167,15 @@ export function mergeQuestion(
     contentQuestion: Question,
     { points }: { points: number }
 ): Question {
-    return contentQuestion;
+    const newQuestion = {
+        id,
+        name,
+        body: contentQuestion.body,
+        type: contentQuestion.type,
+        options: contentQuestion.options,
+        expected: contentQuestion.expected,
+        points: points,
+        published: false
+    };
+    return newQuestion;
 }
