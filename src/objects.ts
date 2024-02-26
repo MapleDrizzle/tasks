@@ -90,15 +90,13 @@ export function toShortForm(question: Question): string {
  * Check the unit tests for more examples of what this looks like!
  */
 export function toMarkdown(question: Question): string {
-    let lastLines: string[];
+    let lastLines: string;
     if (question.type === "multiple_choice_question") {
-        lastLines = question.options.map(
-            (option: string): string => "\n- " + option
-        );
+        lastLines = "\n- " + question.options.join("\n- ");
     } else {
-        lastLines = [];
+        lastLines = "";
     }
-    return "# " + question.name + "\n" + question.body + [...lastLines];
+    return "# " + question.name + "\n" + question.body + lastLines;
 }
 
 /**
