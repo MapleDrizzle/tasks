@@ -232,12 +232,15 @@ export function editOption(
 ): Question[] {
     return questions.map((question: Question): Question => {
         if (question.id === targetId) {
+            // matches id
             if (targetOptionIndex === -1) {
+                // places at end of options
                 return {
                     ...question,
                     options: [...question.options, newOption]
                 };
             } else {
+                // replaces option at that index
                 return {
                     ...question,
                     options: question.options.splice(
