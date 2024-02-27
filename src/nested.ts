@@ -122,7 +122,14 @@ export function toCSV(questions: Question[]): string {
  * making the `text` an empty string, and using false for both `submitted` and `correct`.
  */
 export function makeAnswers(questions: Question[]): Answer[] {
-    return [];
+    return questions.map(
+        (question: Question): Answer => ({
+            correct: false,
+            questionId: question.id,
+            submitted: false,
+            text: ""
+        })
+    );
 }
 
 /***
@@ -266,5 +273,10 @@ export function duplicateQuestionInArray(
     targetId: number,
     newId: number
 ): Question[] {
-    return [];
+    return questions.map((question: Question): Question => {
+        if (question.id === targetId) {
+            const duplicate = duplicateQuestion(newId, question);
+            return questions.splice(indexOf(question), 0, duplicate);
+        }
+    });
 }
