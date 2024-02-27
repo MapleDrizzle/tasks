@@ -1,6 +1,6 @@
 import { Answer } from "./interfaces/answer";
 import { Question, QuestionType } from "./interfaces/question";
-import { makeBlankQuestion } from "./objects";
+import { duplicateQuestion, makeBlankQuestion } from "./objects";
 
 /**
  * Consumes an array of questions and returns a new array with only the questions
@@ -21,8 +21,8 @@ export function getPublishedQuestions(questions: Question[]): Question[] {
 export function getNonEmptyQuestions(questions: Question[]): Question[] {
     const nonEmpty = questions.filter(
         (question: Question): boolean =>
-            question.body !== "" &&
-            question.expected !== "" &&
+            question.body !== "" ||
+            question.expected !== "" ||
             question.options.length > 0
     );
     return [...nonEmpty];
@@ -247,14 +247,12 @@ export function editOption(
                     options: [...question.options, newOption]
                 };
             } else {
+                const copyOptions = [...question.options];
+                copyOptions[targetOptionIndex] = newOption;
                 // replaces option at that index
                 return {
                     ...question,
-                    options: question.options.splice(
-                        targetOptionIndex,
-                        1,
-                        newOption
-                    )
+                    options: copyOptions
                 };
             }
         }
@@ -273,10 +271,21 @@ export function duplicateQuestionInArray(
     targetId: number,
     newId: number
 ): Question[] {
-    return questions.map((question: Question): Question => {
-        if (question.id === targetId) {
-            const duplicate = duplicateQuestion(newId, question);
-            return questions.splice(indexOf(question), 0, duplicate);
-        }
-    });
+    const copy = questions.map(
+        (question: Question): Question => ({ ...question })
+    );
+    const index = questions.findIndex(
+        (question: Question) => question.id === targetId
+    );
+    const newElem = questions.find(
+        (question: Question) => question.id === targetId
+    );
+
+    if (index === -1 || newElem === undefined) {
+        return copy;
+    } else {
+        const newQuestion = duplicateQuestion(newId, newElem);
+        copy.splice(index + 1, 0, newQuestion);
+        return copy;
+    }
 }
