@@ -125,13 +125,16 @@ export function publishQuestion(question: Question): Question {
  * over as "Copy of ORIGINAL NAME" (e.g., so "Question 1" would become "Copy of Question 1").
  * The `published` field should be reset to false.
  */
-export function duplicateQuestion(id: number, oldQuestion: Question): Question {
-    const oldName = oldQuestion.name;
+export function duplicateQuestion(
+    newId: number,
+    oldQuestion: Question
+): Question {
     const newQuestion = {
         ...oldQuestion,
-        id,
-        name: "Copy of " + oldName,
-        published: false
+        name: "Copy of " + oldQuestion.name,
+        published: false,
+        id: newId
+        //options: [...oldQuestion.options]
     };
     return newQuestion;
 }
