@@ -7,30 +7,30 @@ export function CycleHoliday(): JSX.Element {
     const [holiday, setHoliday] = useState<Holiday>("🎅");
 
     function advanceByAlph(): void {
-        setHoliday(
-            holiday === "🤡"
-                ? "🎅"
-                : holiday === "🎅"
-                ? "🎃"
-                : holiday === "🎃"
-                ? "🦃"
-                : holiday === "🦃"
-                ? "💝"
-                : "🤡"
-        );
+        if (holiday === "🤡") {
+            setHoliday("🎅");
+        } else if (holiday === "🎅") {
+            setHoliday("🎃");
+        } else if (holiday === "🎃") {
+            setHoliday("🦃");
+        } else if (holiday === "🦃") {
+            setHoliday("💝");
+        } else {
+            setHoliday("🤡");
+        }
     }
     function advanceByYear(): void {
-        setHoliday(
-            holiday === "💝"
-                ? "🤡"
-                : holiday === "🤡"
-                ? "🎃"
-                : holiday === "🎃"
-                ? "🦃"
-                : holiday === "🦃"
-                ? "🎅"
-                : "💝"
-        );
+        if (holiday === "💝") {
+            setHoliday("🤡");
+        } else if (holiday === "🤡") {
+            setHoliday("🎃");
+        } else if (holiday === "🎃") {
+            setHoliday("🦃");
+        } else if (holiday === "🦃") {
+            setHoliday("🎅");
+        } else {
+            setHoliday("💝");
+        }
     }
 
     return (
