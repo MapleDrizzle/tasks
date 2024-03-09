@@ -12,7 +12,7 @@ function ChangeColor({ colorIndex, setColorIndex }: ColorIndex): JSX.Element {
     return <Button onClick={handleClick}>Next Color</Button>;
 }
 
-function ColorPreview({ colorIndex, setColorIndex }: ColorIndex): JSX.Element {
+function ColorPreview({ colorIndex }: ColorIndex): JSX.Element {
     return (
         <div
             data-testid="colored-box"
