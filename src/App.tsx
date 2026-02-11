@@ -1,5 +1,9 @@
 import React from "react";
 import "./App.css";
+import Jaguar from "./Jaguar.jpg";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import { ChangeType } from "./components/ChangeType";
 import { RevealAnswer } from "./components/RevealAnswer";
 import { StartAttempt } from "./components/StartAttempt";
@@ -22,7 +26,39 @@ function App(): JSX.Element {
             <header className="App-header">
                 UD CISC275 with React Hooks and TypeScript
             </header>
+            <ol>
+                <li>Wow</li>
+                <li>Um</li>
+                <li>Yea</li>
+            </ol>
             <hr></hr>
+            <Container>
+                <Row>
+                    <Col>
+                        <div
+                            style={{
+                                backgroundColor: "red",
+                                height: "100px",
+                                width: "200px"
+                            }}
+                        ></div>
+                    </Col>
+                    <Col>
+                        <div
+                            style={{
+                                backgroundColor: "red",
+                                height: "100px",
+                                width: "200px"
+                            }}
+                        ></div>
+                    </Col>
+                </Row>
+            </Container>
+            <img
+                src={Jaguar}
+                alt="Jaguar Logo"
+                style={{ width: "100px", height: "100px" }}
+            />
             <CheckAnswer expectedAnswer="42"></CheckAnswer>
             <hr></hr>
             <GiveAttempts></GiveAttempts>
